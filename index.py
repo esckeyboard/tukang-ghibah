@@ -4,15 +4,18 @@ import openai
 from discord.ext import commands
 
 #setup openAI client
-openai.api_key = 'YOUR-OPENAI-API'
+
 
 # create a new bot client
 bot = discord.Client(intents=discord.Intents.default())
 
-server_id = 1234567890 #
-channel_id_curhat = 1234567890
-channel_id_ai = 1234567890
-token = "your_bot_token_here"
+
+server_id = 1234567890 #change to your server id
+channel_id_curhat = 1234567890 #change to your channel id to relay the dm
+channel_id_ai = 1234567890 #change to your channel id where the bot will respond to 
+token = "your_bot_token_here" #change to your bot token
+openai.api_key = 'YOUR-OPENAI-API' #change to your openAI API key
+
 
 #change activity
 @bot.event
