@@ -3,13 +3,10 @@ import os
 import openai
 from discord.ext import commands
 
-#setup openAI client
-
-
 # create a new bot client
 bot = discord.Client(intents=discord.Intents.default())
 
-
+#setup
 server_id = 1234567890 #change to your server id
 channel_id_curhat = 1234567890 #change to your channel id to relay the dm
 channel_id_ai = 1234567890 #change to your channel id where the bot will respond to 
@@ -20,17 +17,19 @@ openai.api_key = 'YOUR-OPENAI-API' #change to your openAI API key
 #change activity
 @bot.event
 async def on_ready():
-    activity = discord.Activity(type=discord.ActivityType.listening, name="Curhatan penghuni Kost Hady")
+    activity = discord.Activity(type=discord.ActivityType.listening, name="Curhatan penghuni Kost Hady") #Change the type and name if you want to customize it 
     await bot.change_presence(activity=activity)
     print("BOT IS READY!")
 
 # listen for new messages
 @bot.event
 async def on_message(message):
+    
     # ignore messages sent by the bot itself to avoid infinite loops
     if message.author == bot.user:
         print("messages is from bot itself")
         return
+    
     # ignore if the messages empty
     if message.content == "":
         print("Messages is empty")
@@ -45,12 +44,14 @@ async def on_message(message):
         if bot.user in message.mentions and message.channel.id == channel_id_ai:
             await respond_prompt(message)
             print("BOT got some questions")
+            
         else:
             print("Messages is outside selected channel")
 
 async def relay_dm(message):
     server = bot.get_guild(server_id) 
     channel_curhat = server.get_channel(channel_id_curhat) 
+    
     # check if the channel exists
     if channel_curhat is None:
         print(f"Channel with ID {channel_id_curhat} not found.")
@@ -83,7 +84,4 @@ async def respond_prompt(message):
         await channel.send(f"**ERROR**: {e}", reference=message)
         print(f"**ERROR**: {e}")
 
-
-
-        # run the bot with your bot token
 bot.run(token)
